@@ -7,6 +7,11 @@ export const userAdminService = {
   getUserList: () => {
     return https.get("api/users");
   },
+  getUserPagination: (currentPage) => {
+    return https.get(
+      `api/users/phan-trang-tim-kiem?pageIndex=${currentPage}&pageSize=10`
+    );
+  },
   getUserById: (userId) => {
     return https.get(`api/users/${userId}`);
   },

@@ -3,7 +3,7 @@ import HorizontalCityItem from "../../../Component/Card/HorizontalCityItem";
 
 export default function CityListDesktop({ cityArr }) {
   const renderCityList = () => {
-    return cityArr.map((item, index) => {
+    return cityArr.slice(0, 8).map((item, index) => {
       return (
         <HorizontalCityItem
           photo={item.hinhAnh}

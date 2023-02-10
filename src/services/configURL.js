@@ -9,14 +9,14 @@ export const TOKEN_CYBERSOFT =
 export const createConfig = () => {
   return {
     TokenCybersoft: TOKEN_CYBERSOFT,
-    Authorization: userLocalService.getItem()?.token,
+    token: userLocalService.getItem()?.token,
   };
 };
 
 // axios instance
 export const https = axios.create({
   baseURL: "https://airbnbnew.cybersoft.edu.vn/",
-  timeout: 1000,
+  timeout: 5000,
   headers: createConfig(),
 });
 

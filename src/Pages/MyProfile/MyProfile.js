@@ -21,7 +21,7 @@ export default function MyProfile() {
       .catch((err) => {
         console.log("getBookedHouse err: ", err);
       });
-  }, []);
+  }, [userInfo.user.id]);
 
   useEffect(() => {
     let getHouseInfo = (id) =>

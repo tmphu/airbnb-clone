@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { cityService } from "../../../services/cityService";
+import { locationService } from "../../../services/locationService";
 import LocationSearch from "./LocationSearch";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function Search() {
-  const [cityArr, setCityArr] = useState([]);
+function Search({ cityArr }) {
   let navigate = useNavigate();
   let locationInfo = useSelector((state) => state.locationReducer.locationInfo);
-
-  useEffect(() => {
-    cityService
-      .getCity()
-      .then((res) => {
-        setCityArr(res.data.content);
-      })
-      .catch((err) => {
-        console.log("cityService error", err);
-      });
-  }, []);
 
   return (
     <>

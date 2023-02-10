@@ -9,6 +9,8 @@ import UserAdminModal from "../../Component/Modal/UserAdminModal";
 
 export default function UserAdminPage() {
   const [userArr, setUserArr] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalRow, setTotalRow] = useState(1);
 
   useEffect(() => {
     let handleDeleteUser = (userId) => {
@@ -26,10 +28,11 @@ export default function UserAdminPage() {
 
     let fetchUserList = () => {
       userAdminService
-        .getUserList()
+        .getUserPagination(currentPage)
         .then((res) => {
-          setUserArr(res.data.content);
-          let userList = res.data.content.map((item, index) => {
+          setUserArr(res.data.content.data);
+          setTotalRow(res.data.content.totalRow);
+          let userList = res.data.content.data.map((item, index) => {
             return {
               ...item,
               key: index,
@@ -59,7 +62,7 @@ export default function UserAdminPage() {
         });
     };
     fetchUserList();
-  }, []);
+  }, [currentPage]);
 
   // Table with Search
   const [searchText, setSearchText] = useState("");
@@ -221,9 +224,17 @@ export default function UserAdminPage() {
 
   return (
     <div>
-      {/* <Spinner></Spinner> */}
       <UserAdminModal userId={null} action={"add"} />
-      <Table columns={columnsUser} dataSource={userArr}></Table>
+      <Table
+        columns={columnsUser}
+        dataSource={userArr}
+        pagination={{
+          current: currentPage,
+          onChange: (page) => setCurrentPage(page),
+          pageSize: 10,
+          total: totalRow,
+        }}
+      ></Table>
     </div>
   );
 }

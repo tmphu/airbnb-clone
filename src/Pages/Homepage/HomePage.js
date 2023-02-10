@@ -7,15 +7,15 @@ import {
   houseNatural,
   dogInBed,
 } from "../../assets";
-import { cityService } from "../../services/cityService";
+import { locationService } from "../../services/locationService";
 import CityList from "./CityList/CityList";
 import FeaturedPlace from "./FeaturedPlace/FeaturedPlace";
 
 export default function HomePage() {
   const [cityArr, setCityArr] = useState([]);
   useEffect(() => {
-    cityService
-      .getNearestCity()
+    locationService
+      .getCityPagination(1)
       .then((res) => {
         setCityArr(res.data.content.data);
       })
@@ -35,7 +35,7 @@ export default function HomePage() {
     <>
       <div className="bg-black relative w-screen">
         <div className="absolute inset-x-0">
-          <Search />
+          <Search cityArr={cityArr} />
         </div>
         <div className="px-10 py-10 w-screen">
           <img
