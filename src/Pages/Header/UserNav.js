@@ -57,7 +57,7 @@ export default function UserNav() {
                   <p className="py-2 px-4 hover:bg-gray-200">Cá nhân</p>
                 </NavLink>
                 <NavLink
-                  to={"/admin"}
+                  to={"/admin/user"}
                   onClick={() => setIsShowContextMenu(!isShowContextMenu)}
                 >
                   <p className="py-2 px-4 hover:bg-gray-200">
@@ -111,14 +111,6 @@ export default function UserNav() {
                   onClick={() => setIsShowContextMenu(!isShowContextMenu)}
                 >
                   <p className="py-2 px-4 hover:bg-gray-200">Đăng ký</p>
-                </NavLink>
-                <NavLink
-                  to={"/admin"}
-                  onClick={() => setIsShowContextMenu(!isShowContextMenu)}
-                >
-                  <p className="py-2 px-4 hover:bg-gray-200">
-                    Quản trị website
-                  </p>
                 </NavLink>
               </div>
             </div>

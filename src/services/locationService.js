@@ -1,5 +1,4 @@
 import { https } from "./configURL";
-import { userLocalService } from "./localStorageService";
 
 export const locationService = {
   addLocation: (location) => {

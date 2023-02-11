@@ -6,19 +6,34 @@ import {
   HomeOutlined,
   CreditCardOutlined,
 } from "@ant-design/icons";
+import {
+  faGlobe,
+  faBars,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Layout, Menu, theme } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AdminLayout.css";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { userLocalService } from "../../services/localStorageService";
 
 const { Header, Sider, Content } = Layout;
 
 const AdminLayout = ({ children }) => {
+  let userInfo = useSelector((state) => state.userReducer.userInfo);
+  const [isShowContextMenu, setIsShowContextMenu] = React.useState(false);
   let navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  let handleLogout = () => {
+    userLocalService.removeItem();
+    window.location.href = "/";
+  };
 
   const handleMenuClick = (key) => {
     switch (key) {
@@ -78,7 +93,7 @@ const AdminLayout = ({ children }) => {
             padding: 0,
             background: colorBgContainer,
           }}
-          className="flex flex-row justify-between"
+          className="flex flex-row justify-between items-center"
         >
           {React.createElement(
             collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
@@ -87,10 +102,44 @@ const AdminLayout = ({ children }) => {
               onClick: () => setCollapsed(!collapsed),
             }
           )}
-          <div className="mr-4" onClick={() => navigate("/")}>
-            <button className="bg-blue-500 rounded-lg px-3 font-bold text-white">
-              Về website chính
+          <div className="mr-4 relative">
+            <button
+              className="bg-blue-500 text-black px-2 py-1 rounded-2xl flex flex-row gap-x-3 items-center"
+              onClick={() => setIsShowContextMenu(!isShowContextMenu)}
+            >
+              <FontAwesomeIcon icon={faBars} className="text-white" />
+              {userInfo.user.avatar ? (
+                <img
+                  src={userInfo.user.avatar}
+                  alt=""
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <FontAwesomeIcon icon={faUserCircle} className="w-8 h-8" />
+              )}
             </button>
+            {isShowContextMenu && (
+              <div className="bg-white shadow-xl text-gray-600 rounded-lg flex flex-col cursor-pointer absolute w-60 right-0 z-10">
+                <div className="">
+                  <NavLink
+                    to={"/"}
+                    onClick={() => setIsShowContextMenu(!isShowContextMenu)}
+                  >
+                    <p className="px-4 hover:bg-gray-200">Về trang chính</p>
+                  </NavLink>
+                  <hr />
+                  <p
+                    className="px-4 hover:bg-gray-200"
+                    onClick={function () {
+                      handleLogout();
+                      setIsShowContextMenu(!isShowContextMenu);
+                    }}
+                  >
+                    Thoát
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </Header>
         <Content
