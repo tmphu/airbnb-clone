@@ -37,7 +37,7 @@ export default function HomePage() {
         <div className="absolute inset-x-0">
           <Search cityArr={cityArr} />
         </div>
-        <div className="px-10 py-10 w-screen">
+        <div className="lg:px-10 lg:py-10 py-5">
           <img
             src={bgBanner}
             alt=""
@@ -49,14 +49,14 @@ export default function HomePage() {
             }}
           />
         </div>
-        <h2 className="text-white text-center pb-10 text-3xl">
+        <h2 className="text-white text-center lg:pb-10 pb-5 lg:text-3xl text-md">
           Nhờ có Host, mọi điều đều có thể
         </h2>
       </div>
-      <div className="container mx-auto p-10">
+      <div className="container mx-auto lg:p-10 p-5">
         <CityList cityArr={cityArr}></CityList>
       </div>
-      <div className="container mx-auto p-10">
+      <div className="container mx-auto lg:p-10 p-5">
         <FeaturedPlace placeArr={placeArr}></FeaturedPlace>
       </div>
     </>

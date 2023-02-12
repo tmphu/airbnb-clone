@@ -1,5 +1,23 @@
 import React from "react";
+import VerticalCityItem from "../../../Component/Card/VerticalCityItem";
 
-export default function FeaturedPlaceTablet() {
-  return <div>FeaturedPlaceTablet</div>;
+export default function FeaturedPlaceTablet({ placeArr }) {
+  const renderFeaturedPlace = () => {
+    return placeArr.map((item, index) => {
+      return (
+        <VerticalCityItem
+          photo={item.photo}
+          description={item.description}
+          key={index}
+        />
+      );
+    });
+  };
+
+  return (
+    <>
+      <h2 className="text-lg">Ở bất cứ đâu</h2>
+      <div className="grid grid-cols-2 gap-4 py-5">{renderFeaturedPlace()}</div>
+    </>
+  );
 }

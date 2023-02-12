@@ -15,25 +15,18 @@ export default function LoginPageTablet() {
       .postLogin(dataUser)
       .then((res) => {
         dispatch(setUserInfo(res.data.content));
-        console.log("LoginPage - dispatch(setUserInfo): ", res);
-        // success message
         message.success("Đăng nhập thành công!");
-        // save local storage
         userLocalService.setItem(res.data.content);
         setTimeout(() => {
           if (res.data.content.maLoaiNguoiDung === "QuanTri") {
-            // use navigate to avoid page reloading
-            // if admin, to directly to admin page
             navigate("/admin/user");
           } else {
-            // if not, go to home page
             navigate("/");
           }
         });
       }, 1000)
       .catch((err) => {
         console.log(err);
-        // failure message
         message.error(
           "Thông tin đăng nhập không đúng, vui lòng kiểm tra lại username/password"
         );
@@ -47,10 +40,9 @@ export default function LoginPageTablet() {
     <div className="h-screen flex mx-auto">
       <div className="container m-10 flex">
         <div className="h-full w-2/4">
-          <img src={login} alt="" />
+          <img src={login} alt="" className="p-10" />
         </div>
         <div className="h-full w-2/4 pt-10">
-          {/* form */}
           <Form
             name="basic"
             labelCol={{
@@ -63,18 +55,17 @@ export default function LoginPageTablet() {
               remember: true,
             }}
             onFinish={onFinish}
-            // onFinish={onFinishReduxThunk}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
             layout="vertical"
           >
             <Form.Item
-              label="Tài Khoản"
-              name="taiKhoan"
+              label="Email"
+              name="email"
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng nhập tài khoản!",
+                  message: "Vui lòng nhập email!",
                 },
               ]}
             >
@@ -83,7 +74,7 @@ export default function LoginPageTablet() {
 
             <Form.Item
               label="Mật Khẩu"
-              name="matKhau"
+              name="password"
               rules={[
                 {
                   required: true,

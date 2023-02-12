@@ -8,6 +8,7 @@ import houseOwner from "./img/house-owner.png";
 import user from "./img/user.png";
 import login from "./img/login.png";
 import avatar from "./img/avatar.png";
+import logo from "./img/airbnb-logo.jpg";
 
 export {
   bgBanner,
@@ -20,4 +21,5 @@ export {
   user,
   login,
   avatar,
+  logo,
 };

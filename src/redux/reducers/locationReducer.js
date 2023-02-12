@@ -9,13 +9,11 @@ const locationReducer = createSlice({
   initialState,
   reducers: {
     setLocationInfo: (state, action) => {
-      // trả state về action.payload
       state.locationInfo = action.payload;
     },
   },
 });
 
-// các action được tạo ra cho từng case của reducer
 export const { setLocationInfo } = locationReducer.actions;
 
 export default locationReducer.reducer;

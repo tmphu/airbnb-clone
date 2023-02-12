@@ -37,14 +37,12 @@ export default function SignupPageDesktop() {
     },
   };
 
-  // main part
   const [form] = Form.useForm();
   let navigate = useNavigate();
   let dispatch = useDispatch();
   const onFinish = (dataUser) => {
-    // console.log("Received values of form: ", dataUser);
     userService
-      .postSignup(dataUser)
+      .postSignup({ ...dataUser, role: "USER" })
       .then((res) => {
         dispatch(setUserRegisterInfo(res.data.content));
         message.success(
@@ -79,7 +77,6 @@ export default function SignupPageDesktop() {
         <Form.Item
           name="name"
           label="Họ Tên"
-          // tooltip="What do you want others to call you?"
           rules={[
             {
               required: true,
@@ -167,20 +164,6 @@ export default function SignupPageDesktop() {
             {
               required: false,
               message: "Nhập ngày sinh",
-              whitespace: false,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="role"
-          label="Vai trò"
-          rules={[
-            {
-              required: false,
-              message: "Nhập vai trò",
               whitespace: false,
             },
           ]}

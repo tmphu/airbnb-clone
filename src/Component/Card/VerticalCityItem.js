@@ -5,7 +5,7 @@ export default function VerticalCityItem(props) {
   return (
     <NavLink to="/">
       <img
-        className="object-cover w-64 h-64 rounded-md"
+        className="object-cover lg:w-64 lg:h-64 h-60 w-full rounded-md"
         src={props.photo}
         alt=""
       />

@@ -14,25 +14,18 @@ export default function LoginPageMobile() {
       .postLogin(dataUser)
       .then((res) => {
         dispatch(setUserInfo(res.data.content));
-        console.log("LoginPage - dispatch(setUserInfo): ", res);
-        // success message
         message.success("Đăng nhập thành công!");
-        // save local storage
         userLocalService.setItem(res.data.content);
         setTimeout(() => {
           if (res.data.content.maLoaiNguoiDung === "QuanTri") {
-            // use navigate to avoid page reloading
-            // if admin, to directly to admin page
             navigate("/admin/user");
           } else {
-            // if not, go to home page
             navigate("/");
           }
         });
       }, 1000)
       .catch((err) => {
         console.log(err);
-        // failure message
         message.error(
           "Thông tin đăng nhập không đúng, vui lòng kiểm tra lại username/password"
         );
@@ -46,7 +39,6 @@ export default function LoginPageMobile() {
     <div className="h-screen flex mx-auto">
       <div className="container p-5">
         <div className="h-full pt-10">
-          {/* form */}
           <Form
             name="basic"
             labelCol={{
@@ -59,18 +51,17 @@ export default function LoginPageMobile() {
               remember: true,
             }}
             onFinish={onFinish}
-            // onFinish={onFinishReduxThunk}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
             layout="vertical"
           >
             <Form.Item
-              label="Tài Khoản"
-              name="taiKhoan"
+              label="Email"
+              name="email"
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng nhập tài khoản!",
+                  message: "Vui lòng nhập email!",
                 },
               ]}
             >
@@ -79,7 +70,7 @@ export default function LoginPageMobile() {
 
             <Form.Item
               label="Mật Khẩu"
-              name="matKhau"
+              name="password"
               rules={[
                 {
                   required: true,

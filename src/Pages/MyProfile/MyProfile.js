@@ -44,9 +44,9 @@ export default function MyProfile() {
   }, [bookedHouseArr]);
 
   return (
-    <div className="profile__page flex flex-row container m-10 gap-6">
-      <div className="profile__block w-1/3">
-        <div className="container border-2 rounded-2xl p-6">
+    <div className="profile__page flex lg:flex-row flex-col container mx-auto m-10">
+      <div className="profile__block lg:w-1/3">
+        <div className="border-2 rounded-2xl p-6 mx-5">
           <ProfilePhoto />
           <div className="profile__identity p-6">
             <FontAwesomeIcon icon={faUserCheck} />
@@ -71,7 +71,7 @@ export default function MyProfile() {
         </div>
         <hr />
       </div>
-      <div className="profile__bookedHouse w-2/3">
+      <div className="profile__bookedHouse lg:w-2/3">
         <div className="container p-6">
           <h3 className="font-bold text-3xl">Xin chào, {userInfo.user.name}</h3>
           <p>Bắt đầu tham gia vào 2021</p>

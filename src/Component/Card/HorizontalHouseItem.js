@@ -6,11 +6,11 @@ import { NavLink } from "react-router-dom";
 function HorizontalHouseItem({ houseInfo }) {
   return (
     <NavLink
-      className="flex flex-row border rounded-lg shadow md:flex-row md:max-w-6xl p-5 gap-10"
+      className="flex md:flex-row flex-col border rounded-lg shadow md:max-w-6xl p-5 md:gap-10 gap-5"
       to={`/detail/${houseInfo.id}`}
     >
       <img
-        className="object-cover w-80 h-60 rounded-md"
+        className="object-cover lg:w-80 lg:h-60 md:w-60 md:h-32 h-44 rounded-md"
         src={houseInfo.hinhAnh}
         alt=""
       />
@@ -38,7 +38,7 @@ function HorizontalHouseItem({ houseInfo }) {
           />
         </div>
         <p className="text-right text-2xl">
-          <span className="font-bold">${houseInfo.giaTien}</span>/ tháng
+          <span className="font-bold">${houseInfo.giaTien}</span>/ đêm
         </p>
       </div>
     </NavLink>

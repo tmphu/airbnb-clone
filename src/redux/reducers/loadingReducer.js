@@ -17,7 +17,6 @@ const loadingReducer = createSlice({
   },
 });
 
-// các action được tạo ra cho từng case của reducer
 export const { setLoadingOn, setLoadingOff } = loadingReducer.actions;
 
 export default loadingReducer.reducer;

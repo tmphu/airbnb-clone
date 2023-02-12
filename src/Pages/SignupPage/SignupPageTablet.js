@@ -37,16 +37,13 @@ export default function SignupPageTablet() {
     },
   };
 
-  // main part
   const [form] = Form.useForm();
   let navigate = useNavigate();
   let dispatch = useDispatch();
   const onFinish = (dataUser) => {
-    // console.log('Received values of form: ', dataUser);
     userService
-      .postSignup(dataUser)
+      .postSignup({ ...dataUser, role: "USER" })
       .then((res) => {
-        console.log("SignupPage - New register: ", res);
         dispatch(setUserRegisterInfo(res.data.content));
         message.success(
           "Tạo tài khoản thành công! Vui lòng đăng nhập bằng tài khoản vừa tạo"
@@ -73,65 +70,13 @@ export default function SignupPageTablet() {
       >
         <Form.Item>
           <div className="text-4xl font-semibold tracking-wider mx-auto pb-5 flex flex-nowrap justify-center pl-40 text-indigo-900">
-            SIGN UP
+            ĐĂNG KÝ TÀI KHOẢN
           </div>
         </Form.Item>
 
         <Form.Item
-          name="taiKhoan"
-          label="Tài Khoản"
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng nhập vào tài khoản muốn tạo!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="matKhau"
-          label="Mật Khẩu"
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng nhập mật khẩu!",
-            },
-          ]}
-          hasFeedback
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name="confirm"
-          label="Nhập lại Mật Khẩu"
-          dependencies={["matKhau"]}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng nhập lại mật khẩu!",
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("matKhau") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  new Error("Mật khẩu nhập lại chưa trùng khớp!")
-                );
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name="hoTen"
+          name="name"
           label="Họ Tên"
-          // tooltip="What do you want others to call you?"
           rules={[
             {
               required: true,
@@ -158,13 +103,67 @@ export default function SignupPageTablet() {
         >
           <Input />
         </Form.Item>
+
         <Form.Item
-          name="soDt"
+          name="password"
+          label="Mật Khẩu"
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng nhập mật khẩu!",
+            },
+          ]}
+          hasFeedback
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          name="confirmPassword"
+          label="Nhập lại Mật Khẩu"
+          dependencies={["password"]}
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng nhập lại mật khẩu!",
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error("Mật khẩu nhập lại chưa trùng khớp!")
+                );
+              },
+            }),
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          name="phone"
           label="Số Điện Thoại"
           rules={[
             {
               required: true,
               message: "Vui lòng nhập số điện thoại!",
+              whitespace: false,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="birthday"
+          label="Ngày sinh"
+          rules={[
+            {
+              required: false,
+              message: "Nhập ngày sinh",
               whitespace: false,
             },
           ]}

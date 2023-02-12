@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { houseService } from "../../services/houseService";
 import { houseOwner } from "../../assets";
@@ -13,8 +13,11 @@ import {
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import Comment from "../../Component/Comment/Comment";
-import TestPicker from "../../Component/Input/DatePicker";
 import { useSelector } from "react-redux";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./DetailPage.css";
+import { addDays } from "date-fns";
 
 export default function DetailPage() {
   let userInfo = useSelector((state) => state.userReducer.userInfo);
@@ -22,6 +25,9 @@ export default function DetailPage() {
   let navigate = useNavigate();
   const [house, setHouse] = React.useState({});
   const [houseComment, setHouseComment] = React.useState([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(addDays(new Date(), 1));
+  const [guestNo, setGuestNo] = useState(1);
 
   useEffect(() => {
     houseService
@@ -71,8 +77,11 @@ export default function DetailPage() {
   };
 
   return (
-    <div className="container mx-auto p-10">
-      <div id="house__header" className="grid grid-rows-2 grid-cols-3">
+    <div className="container mx-auto md:p-10 p-5">
+      <div
+        id="house__header"
+        className="grid md:grid-rows-2 md:grid-cols-3 grid-cols-1"
+      >
         <h3 className="mb-2 text-xl font-bold text-gray-900 col-span-2">
           {house.tenPhong}
         </h3>
@@ -82,7 +91,7 @@ export default function DetailPage() {
           </span>
           4,83 &#40;16 đánh giá&#41; - Chủ nhà siêu cấp
         </p>
-        <div className="flex flex-row gap-4 justify-end">
+        <div className="flex flex-row gap-4 justify-end py-3">
           <p>
             <FontAwesomeIcon icon={faShareSquare} />{" "}
             <span className="underline font-bold">Chia sẻ</span>
@@ -94,7 +103,7 @@ export default function DetailPage() {
         </div>
       </div>
       <img src={house.hinhAnh} alt="" className="w-full" />
-      <div className="grid grid-cols-3 grid-rows-2 pt-8 gap-x-20 gap-y-4">
+      <div className="lg:grid lg:grid-cols-3 lg:grid-rows-2 flex flex-col pt-8 lg:gap-x-20 lg:gap-y-4">
         <div id="house__detail" className="col-span-2">
           <div id="house__name" className="flex flex-row gap-6 pb-6">
             <div>
@@ -159,7 +168,7 @@ export default function DetailPage() {
           <hr />
           <div
             id="house__facility"
-            className="grid grid-cols-2 grid-rows-5 pt-6"
+            className="grid grid-cols-2 grid-rows-3 py-6"
           >
             <h3 className="text-xl col-span-2 pb-3">Tiện nghi</h3>
             <div className="flex flex-row gap-2">
@@ -178,13 +187,24 @@ export default function DetailPage() {
               <FontAwesomeIcon icon={faHome} />
               <p>Thang máy</p>
             </div>
+            <div className="flex flex-row gap-2">
+              <FontAwesomeIcon icon={faHome} />
+              <p>Tủ lạnh</p>
+            </div>
+            <div className="flex flex-row gap-2">
+              <FontAwesomeIcon icon={faHome} />
+              <p>Máy giặt</p>
+            </div>
           </div>
         </div>
         <div id="house__checkout">
           <div className="shadow-xl">
-            <div className="container p-6 py-4">
+            <div className="container p-6 py-4 mb-12">
               <div className="flex flex-row justify-between py-3">
-                <p>${house.giaTien} / đêm</p>
+                <p className="text-lg">
+                  <span className="text-xl font-bold">${house.giaTien}</span> /
+                  đêm
+                </p>
                 <p>
                   <span className="text-pink-500 pr-1">
                     <FontAwesomeIcon icon={faStar} />
@@ -192,26 +212,65 @@ export default function DetailPage() {
                   4.83 <span className="underline">&#40;16 đánh giá&#41;</span>
                 </p>
               </div>
-              <div className="grid grid-cols-2 grid-rows-2 border-2 mb-3">
-                <div>NHẬN PHÒNG</div>
-                <div>TRẢ PHÒNG</div>
-                <div className="col-span-2">KHÁCH</div>
+              <div className="grid grid-cols-2 grid-rows-2 mb-3 divide-x-2 divide-y-2 border-2">
+                <div className="p-2">
+                  <p className="text-xs">NHẬN PHÒNG</p>
+                  <DatePicker
+                    name="startDate"
+                    selected={startDate}
+                    minDate={new Date()}
+                    onChange={(date) => {
+                      setStartDate(date);
+                      if (date.getDate() >= endDate.getDate()) {
+                        setEndDate(addDays(date, 1));
+                      }
+                    }}
+                    dateFormat="dd/MM/yyyy"
+                  />
+                </div>
+                <div className="p-2">
+                  <p className="text-xs">TRẢ PHÒNG</p>
+                  <DatePicker
+                    name="endDate"
+                    selected={endDate}
+                    minDate={addDays(startDate, 1)}
+                    maxDate={addDays(startDate, 30)}
+                    onChange={(date) => setEndDate(date)}
+                    dateFormat="dd/MM/yyyy"
+                  />
+                </div>
+                <div className="col-span-2 p-2">
+                  <p className="text-xs">KHÁCH</p>
+                  <input
+                    name="guestNo"
+                    type="text"
+                    value={guestNo}
+                    onChange={(event) => setGuestNo(event.target.value)}
+                  />
+                </div>
               </div>
               <div
                 className="bg-pink-500 px-6 py-2 rounded-md text-white text-center font-bold cursor-pointer mb-3"
                 onClick={() =>
-                  bookHouse("2023-02-07", "2023-02-07", 1, userInfo.user.id)
+                  bookHouse(startDate, endDate, guestNo, userInfo.user.id)
                 }
               >
                 Đặt phòng
               </div>
               <div className="text-center mb-3">Bạn vẫn chưa bị trừ tiền</div>
-              <div>Tổng $44</div>
+              <div className="text-xl font-bold">
+                Tổng $
+                {house.giaTien *
+                  Math.ceil(
+                    Math.abs(endDate.getTime() - startDate.getTime()) /
+                      (1000 * 3600 * 24)
+                  )}
+              </div>
             </div>
           </div>
         </div>
         <div id="house__review" className="col-span-3">
-          <div className="grid grid-rows-2 grid-cols-2 gap-x-20 gap-y-4">
+          <div className="grid md:grid-rows-2 md:grid-cols-2 md:gap-x-20 md:gap-y-4 grid-cols-1">
             {renderHouseComment()}
           </div>
           <textarea
@@ -222,7 +281,6 @@ export default function DetailPage() {
             className="block w-full border-2 border-gray-300 p-2 rounded-lg mb-4"
           ></textarea>
           <button className="bg-blue-500 text-white p-3">Add comment</button>
-          <TestPicker />
         </div>
       </div>
     </div>
