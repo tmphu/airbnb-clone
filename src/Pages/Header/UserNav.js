@@ -56,14 +56,18 @@ export default function UserNav() {
                 >
                   <p className="py-2 px-4 hover:bg-gray-200">Cá nhân</p>
                 </NavLink>
-                <NavLink
-                  to={"/admin/user"}
-                  onClick={() => setIsShowContextMenu(!isShowContextMenu)}
-                >
-                  <p className="py-2 px-4 hover:bg-gray-200">
-                    Quản trị website
-                  </p>
-                </NavLink>
+                {userInfo.user.role === "ADMIN" ? (
+                  <NavLink
+                    to={"/admin/user"}
+                    onClick={() => setIsShowContextMenu(!isShowContextMenu)}
+                  >
+                    <p className="py-2 px-4 hover:bg-gray-200">
+                      Quản trị website
+                    </p>
+                  </NavLink>
+                ) : (
+                  <></>
+                )}
                 <hr />
                 <p
                   className="py-2 px-4 hover:bg-gray-200"

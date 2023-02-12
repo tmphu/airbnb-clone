@@ -2,8 +2,20 @@ import { Button, Modal, Form, Input, message } from "antd";
 import { useEffect, useState } from "react";
 import "./LocationAdminModal.css";
 import { locationService } from "../../services/locationService";
+import axios from "axios";
+import { BASE_URL } from "../../services/configURL";
+import { TOKEN_CYBERSOFT } from "../../services/configURL";
+import { userLocalService } from "../../services/localStorageService";
 
 const LocationAdminModal = ({ locationId, fetchLocationList, action }) => {
+  let userToken = userLocalService.getItem().token;
+  const headers = {
+    accept: "application/json",
+    token: userToken,
+    tokenCybersoft: TOKEN_CYBERSOFT,
+    "Content-Type": "application/json-patch+json",
+  };
+
   const [locationData, setLocationData] = useState({});
   useEffect(() => {
     if (locationId) {
@@ -22,6 +34,7 @@ const LocationAdminModal = ({ locationId, fetchLocationList, action }) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
+    window.location.reload();
   };
 
   // handle submit
@@ -39,8 +52,8 @@ const LocationAdminModal = ({ locationId, fetchLocationList, action }) => {
           message.error("Có lỗi xảy ra!");
         });
     } else {
-      locationService
-        .addLocation(values)
+      axios
+        .post(`${BASE_URL}api/vi-tri`, values, { headers })
         .then((res) => {
           message.success("Thêm vị trí thành công!");
           handleClose();
@@ -48,7 +61,7 @@ const LocationAdminModal = ({ locationId, fetchLocationList, action }) => {
         })
         .catch((err) => {
           console.log("addLocation err", err);
-          message.error("Có lỗi xảy ra!");
+          message.error(err.response.data.content);
         });
     }
   };

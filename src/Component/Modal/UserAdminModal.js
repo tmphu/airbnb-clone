@@ -22,6 +22,7 @@ const UserAdminModal = ({ userId, fetchUserList, action, isSelfEdit }) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
+    window.location.reload();
   };
 
   // handle submit
@@ -48,7 +49,7 @@ const UserAdminModal = ({ userId, fetchUserList, action, isSelfEdit }) => {
         })
         .catch((err) => {
           console.log("addUser err", err);
-          message.error("Có lỗi xảy ra!");
+          message.error(err.response.data.content);
         });
     }
   };

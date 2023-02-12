@@ -63,6 +63,7 @@ export default function LocationAdminPage() {
         });
     };
     fetchLocationList();
+    // window.location.reload();
   }, [currentPage]);
 
   // Table with Search
