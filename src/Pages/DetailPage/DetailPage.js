@@ -18,6 +18,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./DetailPage.css";
 import { addDays } from "date-fns";
+import { message } from "antd";
 
 export default function DetailPage() {
   let userInfo = useSelector((state) => state.userReducer.userInfo);
@@ -251,9 +252,16 @@ export default function DetailPage() {
               </div>
               <div
                 className="bg-pink-500 px-6 py-2 rounded-md text-white text-center font-bold cursor-pointer mb-3"
-                onClick={() =>
-                  bookHouse(startDate, endDate, guestNo, userInfo.user.id)
-                }
+                onClick={() => {
+                  if (userInfo) {
+                    bookHouse(startDate, endDate, guestNo, userInfo.user.id);
+                  } else {
+                    message.error("Bạn cần đăng nhập để đặt phòng");
+                    setTimeout(() => {
+                      navigate("/login");
+                    }, 1000);
+                  }
+                }}
               >
                 Đặt phòng
               </div>
