@@ -7,7 +7,8 @@ Responsive is available on mobile, tablet, desktop.
 ## Getting Started
 
 ```
-<!--- This is an HTML comment in Markdown -->
+<!--- This is an HTML comment in Markdown --->
+<!-- This is an HTML comment in Markdown -->
 [//]: # (This is a comment.)
 # Install dependencies
 npm install
