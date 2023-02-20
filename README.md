@@ -6,7 +6,9 @@ Responsive is available on mobile, tablet, desktop.
 
 ## Getting Started
 
-> Install dependencies
-> `npm install`
-> Start react app
-> `npm start`
+```
+# Install dependencies
+npm install
+# Start react app
+npm start
+```
